@@ -23,7 +23,6 @@ export default function TabsLayout() {
           },
         }}
       />
-      <Tabs.Screen name="Login" options={{ title: "Login" }} />
     </Tabs>
   );
 }
