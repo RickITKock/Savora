@@ -2,7 +2,6 @@ import Entypo from "@expo/vector-icons/Entypo";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Octicons from "@expo/vector-icons/Octicons";
-
 import { Tabs, useRouter } from "expo-router";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 
@@ -27,8 +26,7 @@ export default function TabsLayout() {
         headerShown: true,
         headerTransparent: true,
         headerTitle: "Savora",
-        headerTitleStyle: styles.appTitle,
-        headerRight: () => (
+        headerRight: ({ tintColor }) => (
           <View style={styles.headerIcons}>
             <TouchableOpacity
               onPress={handleNotifications}
@@ -37,12 +35,12 @@ export default function TabsLayout() {
               <MaterialIcons
                 name="notifications-none"
                 size={26}
-                color="white"
+                color={tintColor}
               />
             </TouchableOpacity>
 
             <TouchableOpacity onPress={handleLogout} style={styles.iconBtn}>
-              <MaterialIcons name="logout" size={26} color="white" />
+              <MaterialIcons name="logout" size={26} color={tintColor} />
             </TouchableOpacity>
           </View>
         ),
