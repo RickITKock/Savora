@@ -20,7 +20,6 @@ export default function TabsLayout() {
     console.log("Notifications clicked!");
   };
 
-  /* Bottom Tabs */
   return (
     <Tabs
       screenOptions={{

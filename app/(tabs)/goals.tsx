@@ -1,13 +1,15 @@
-import { StyleSheet, Text, View } from "react-native";
+import { View } from "react-native";
+import { Text } from "react-native-paper";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function GoalsScreen() {
+export default function Goals() {
   return (
-    <View style={styles.view}>
-      <Text>Goals</Text>
+    <View style={{ flex: 1 }}>
+      <SafeAreaView edges={["top"]}>
+        <Text variant="titleLarge">
+          Goals
+        </Text>
+      </SafeAreaView>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  view: { flex: 1, justifyContent: "center", alignItems: "center" },
-});
