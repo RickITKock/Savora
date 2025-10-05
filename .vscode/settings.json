@@ -9,7 +9,16 @@
     "**/.svn": true,
     "**/.hg": true,
     "**/.DS_Store": true,
-    "**/Thumbs.db": true
+    "**/Thumbs.db": true,
+    ".gitignore": true,
+    "app.json": true,
+    "node_modules": true,
+    "eslint.config.js": true
   },
-  "hide-files.files": []
+  "hide-files.files": [
+    ".gitignore",
+    "app.json",
+    "node_modules",
+    "eslint.config.js"
+  ]
 }
