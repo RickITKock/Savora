@@ -1,11 +1,7 @@
-// Example inside app/(tabs)/index.tsx
 import ImageSummaryCard from "@/components/ImageSummaryCard";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "expo-router";
-// import { StatusBar } from "expo-status-bar";
-
 import { StatusBar } from "expo-status-bar";
-
 import { useEffect, useRef, useState } from "react";
 import { Animated, StyleSheet, View } from "react-native";
 import { Text } from "react-native-paper";
