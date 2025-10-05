@@ -42,7 +42,7 @@ export default function TabsLayout() {
 
       {/* Bottom Tabs */}
       <Tabs
-        screenOptions={{ tabBarActiveTintColor: "green", headerShown: false }}
+        screenOptions={{ tabBarActiveTintColor: "#27ae60", headerShown: false }}
       >
         <Tabs.Screen
           name="index"
