@@ -1,25 +1,20 @@
 import { Link } from "expo-router";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Index() {
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text>Login</Text>
+    <SafeAreaView style={styles.safe}>
+      <Text>Welcome</Text>
       <Link href="/" style={styles.navButton}>
-        Go to Login
+        Login
       </Link>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  view: { flex: 1, justifyContent: "center", alignItems: "center" },
+  safe: { flex: 1, alignItems: "center", justifyContent: "center" },
   navButton: {
     marginTop: 20,
     fontSize: 18,
