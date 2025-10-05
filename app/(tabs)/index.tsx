@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 export default function HomeScreen() {
   return (
     <View style={styles.view}>
-      <Text>Edit app/index.tsx to edit this screen.</Text>
+      <Text>Home</Text>
     </View>
   );
 }
