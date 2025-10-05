@@ -3,12 +3,15 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import Octicons from "@expo/vector-icons/Octicons";
 
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { Tabs } from "expo-router";
+import { Tabs, useRouter } from "expo-router";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function TabsLayout() {
+  const router = useRouter();
+
   const handleLogout = () => {
     // TODO: Add logout logic here
+    router.replace("/login");
     console.log("Logged out!");
   };
 
