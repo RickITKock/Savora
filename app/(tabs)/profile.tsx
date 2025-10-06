@@ -9,5 +9,5 @@ export default function ProfileScreen() {
 }
 
 const styles = StyleSheet.create({
-  view: { flex: 1, justifyContent: "center", alignItems: "center" },
+  view: { flex: 1 },
 });
