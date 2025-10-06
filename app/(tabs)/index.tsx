@@ -9,6 +9,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 const HEADER_FADE_DISTANCE = 80;
 
+import { BlurView } from "expo-blur";
+const AnimatedBlurView = Animated.createAnimatedComponent(BlurView);
+
 export default function Home() {
   const navigation = useNavigation();
   const scrollY = useRef(new Animated.Value(0)).current;
@@ -17,21 +20,30 @@ export default function Home() {
   useEffect(() => {
     const opacity = scrollY.interpolate({
       inputRange: [0, HEADER_FADE_DISTANCE],
-      outputRange: [0, 1],
+      outputRange: [0, 1], // 0 → transparent, 1 → fully visible
       extrapolate: "clamp",
     });
 
     navigation.setOptions({
       headerTransparent: true,
       headerBackground: () => (
-        <Animated.View
-          style={[
-            StyleSheet.absoluteFill,
-            { backgroundColor: "#fff", opacity },
-          ]}
-        />
+        <View style={StyleSheet.absoluteFill}>
+          {/* Frosted glass blur */}
+          <AnimatedBlurView
+            tint="light" // 'light' | 'dark' | 'default'
+            intensity={40} // blur strength (0–100)
+            style={[StyleSheet.absoluteFill, { opacity }]}
+          />
+          {/* Subtle white wash over the blur for readability */}
+          <Animated.View
+            pointerEvents="none"
+            style={[
+              StyleSheet.absoluteFill,
+              { backgroundColor: "rgba(255,255,255,0.9)", opacity },
+            ]}
+          />
+        </View>
       ),
-      headerTitle: "Savora",
     });
   }, [navigation, scrollY]);
 

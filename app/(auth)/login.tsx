@@ -152,13 +152,6 @@ export default function Index() {
   );
 }
 
-/**
- * Error
- * You have provided an invalid combination of identification code. Please check your details again.
- * You are allowed three attempts in total.
- * [ok]
- */
-
 function KeyRow({ children }: { children: React.ReactNode }) {
   return <View style={styles.keyRow}>{children}</View>;
 }
