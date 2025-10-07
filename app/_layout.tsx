@@ -2,7 +2,6 @@ import { Stack } from "expo-router";
 import { StyleSheet } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
-// TODO: Create lists of goals
 // TODO: Add add button on goals screen
 // TODO: Add state management (e.g., Zustand or Redux)
 // TODO: Handle screen layout changes (e.g., keyboard appearance)
@@ -20,11 +19,13 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 // TODO: Release engineering (analytics, CI/CD, OTA, Stores, etc.)
 
 export default function RootLayout() {
+
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.safeArea} edges={["left", "right"]}>
         <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="(auth)" />
+          <Stack.Screen name="(auth)"  />
+          <Stack.Screen name="(goals)"  />
           <Stack.Screen name="(tabs)" />
         </Stack>
       </SafeAreaView>
