@@ -1,12 +1,34 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { type StyleProp, StyleSheet, TextInput, View } from "react-native";
+import {
+  type StyleProp,
+  StyleSheet,
+  TextInput,
+  type TextInputEndEditingEvent,
+  View,
+} from "react-native";
 import type { ViewStyle } from "react-native/Libraries/StyleSheet/StyleSheetTypes";
 
-export const SearchBar = ({ style }: { style?: StyleProp<ViewStyle> }) => {
+export const SearchBar = ({
+  style,
+  term,
+  onTermChange,
+  onTermSubmit,
+}: {
+  style?: StyleProp<ViewStyle>;
+  term: string;
+  onTermChange: (text: string) => void;
+  onTermSubmit: (e: TextInputEndEditingEvent) => void;
+}) => {
   return (
     <View style={[styles.searchBarBackground, style]}>
       <FontAwesome name="search" style={styles.iconStyle} color="black" />
-      <TextInput style={styles.inputStyle} placeholder="Search" />
+      <TextInput
+        style={styles.inputStyle}
+        placeholder="Search"
+        value={term}
+        onChangeText={(newTerm) => onTermChange(newTerm)}
+        onEndEditing={(e) => onTermSubmit(e)}
+      />
     </View>
   );
 };
