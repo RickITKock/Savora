@@ -1,4 +1,4 @@
-import FontAwesome from "@expo/vector-icons/FontAwesome";
+import EvilIcons from '@expo/vector-icons/EvilIcons';
 import {
   type StyleProp,
   StyleSheet,
@@ -21,7 +21,7 @@ export const SearchBar = ({
 }) => {
   return (
     <View style={[styles.searchBarBackground, style]}>
-      <FontAwesome name="search" style={styles.iconStyle} color="black" />
+      <EvilIcons name="search" style={styles.iconStyle} />
       <TextInput
         style={styles.inputStyle}
         placeholder="Search"
@@ -35,7 +35,7 @@ export const SearchBar = ({
 
 const styles = StyleSheet.create({
   searchBarBackground: {
-    backgroundColor: "#F0EEEE",
+    backgroundColor: "#ffffff",
     height: 50,
     borderRadius: 5,
     marginHorizontal: 15,
@@ -49,5 +49,6 @@ const styles = StyleSheet.create({
     fontSize: 35,
     alignSelf: "center",
     marginHorizontal: 15,
+    color: "gray",
   },
 });

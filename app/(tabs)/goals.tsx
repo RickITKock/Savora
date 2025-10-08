@@ -1,9 +1,9 @@
-import GoalListItem from "@/components/GoalListItem";
+import GoalList from "@/components/GoalsList";
 import { SearchBar } from "@/components/SearchBar";
 import { useResults } from "@/hooks/useResults";
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { Button } from "react-native-paper";
 
 const GoalsScreen = (props: unknown) => {
@@ -42,20 +42,7 @@ const GoalsScreen = (props: unknown) => {
         onTermSubmit={() => handleOnTermSubmit(term)}
       />
       {errorMessage && <Text>{errorMessage}</Text>}
-      <FlatList
-        data={goals}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => {
-          return (
-            <GoalListItem
-              style={styles.listItem}
-              title={item.title}
-              subtitle={item.category}
-              imageSource={item.imageSource}
-            />
-          );
-        }}
-      />
+      <GoalList results={goals} title="All" />
       <Button
         onPress={() => router.navigate("/(goals)/AddGoal")}
         mode="contained"
@@ -69,10 +56,8 @@ const GoalsScreen = (props: unknown) => {
 const styles = StyleSheet.create({
   view: { flex: 1 },
   searchBar: {
-    marginTop: 15,
-  },
-  listItem: {
-    marginVertical: 16,
+    marginTop: 10,
+    marginBottom: 10,
   },
 });
 

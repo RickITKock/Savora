@@ -14,7 +14,6 @@ export default function GoalListItem({
   title,
   subtitle,
   imageSource,
-  onPress,
   style,
 }: Props) {
   return (
@@ -29,5 +28,5 @@ export default function GoalListItem({
 }
 
 const styles = StyleSheet.create({
-  card: { margin: 16, backgroundColor: "white" },
+  card: { backgroundColor: "white" },
 });

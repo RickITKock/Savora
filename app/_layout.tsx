@@ -2,10 +2,8 @@ import { Stack } from "expo-router";
 import { StyleSheet } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
-// TODO: Add add button on goals screen
-// TODO: Add state management (e.g., Zustand or Redux)
 // TODO: Handle screen layout changes (e.g., keyboard appearance)
-// TODO: Add a search bar
+// TODO: Add a results screen
 // TODO: Configure axios instance for API calls
 // TODO: Make hooks reusable
 // TODO: Navigate with params
