@@ -2,10 +2,7 @@ import { Stack } from "expo-router";
 import { StyleSheet } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
-// TODO: Handle screen layout changes (e.g., keyboard appearance)
-// TODO: Add a results screen
 // TODO: Configure axios instance for API calls
-// TODO: Make hooks reusable
 // TODO: Navigate with params
 // TODO: Advanced state management
 // TODO: Data API sync
@@ -20,7 +17,7 @@ export default function RootLayout() {
 
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={styles.safeArea} edges={["left", "right"]}>
+      <SafeAreaView style={styles.safeArea} edges={["left", "right", "top", "bottom"]}>
         <Stack screenOptions={{ headerShown: false }}>
           <Stack.Screen name="(auth)"  />
           <Stack.Screen name="(goals)"  />
@@ -34,6 +31,6 @@ export default function RootLayout() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#fff", // base background for all screens
+    backgroundColor: "#fff",
   },
 });

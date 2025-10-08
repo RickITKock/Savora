@@ -5,9 +5,6 @@ import { Text } from "react-native-paper";
 
 export default function Goal() {
   const { id } = useLocalSearchParams<{id: string}>()
-
-  console.log(id);
-
   const navigation = useNavigation();
 
   useEffect(() => {

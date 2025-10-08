@@ -1,5 +1,4 @@
-import { Link, useRouter } from "expo-router";
-import { NavigationOptions } from "expo-router/build/global-state/routing";
+import { Link } from "expo-router";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import GoalListItem from "./GoalListItem";
 
@@ -16,32 +15,25 @@ type Props = {
   results: Goal[];
 };
 
-type props = NavigationOptions;
-
 export const GoalsList: React.FC<Props> = ({ title, results }) => {
-  const router = useRouter();
-
   return (
     <View style={styles.container}>
       <Text>{title}</Text>
       <FlatList
+        style={{ marginTop: 20 }}
         data={results}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => {
           return (
             <Link
+              key={item.id}
               href={{
                 pathname: "/(goals)/[id]",
                 params: { id: item.id },
               }}
               style={styles.listItemContainer}
             >
-              <GoalListItem
-                title={item.title}
-                subtitle={item.category}
-                imageSource={item.imageSource}
-                style={styles.listItem}
-              />
+              <GoalListItem {...item} style={styles.listItem} />
             </Link>
           );
         }}
@@ -53,7 +45,7 @@ export const GoalsList: React.FC<Props> = ({ title, results }) => {
 const styles = StyleSheet.create({
   container: { flex: 1 },
   listItemContainer: {
-    marginVertical: 16,
+    marginBottom: 20,
   },
 
   listItem: {
