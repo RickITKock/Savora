@@ -1,4 +1,5 @@
 import GoalListItem from "@/components/GoalListItem";
+import { SearchBar } from "@/components/SearchBar";
 import { useRouter } from "expo-router";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import { Button } from "react-native-paper";
@@ -30,6 +31,7 @@ const GoalsScreen = (props: unknown) => {
   return (
     <View style={styles.view}>
       <Text>Goals</Text>
+      <SearchBar style={styles.searchBar} />
       <FlatList
         data={goals}
         keyExtractor={(item) => item.id}
@@ -56,6 +58,9 @@ const GoalsScreen = (props: unknown) => {
 
 const styles = StyleSheet.create({
   view: { flex: 1 },
+  searchBar: {
+    marginTop: 15,
+  },
   listItem: {
     marginVertical: 16,
   },
