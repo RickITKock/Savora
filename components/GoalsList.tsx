@@ -1,14 +1,7 @@
+import { Goal } from "@/app/interfaces/Goal";
 import { Link } from "expo-router";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import GoalListItem from "./GoalListItem";
-
-// TODO: Create an interface and remove the following code
-type Goal = {
-  id: string;
-  title: string;
-  category: string;
-  imageSource: any;
-};
 
 type Props = {
   title: string;
@@ -33,7 +26,12 @@ export const GoalsList: React.FC<Props> = ({ title, results }) => {
               }}
               style={styles.listItemContainer}
             >
-              <GoalListItem {...item} style={styles.listItem} />
+              <GoalListItem
+                title={item.title}
+                subtitle={item.category}
+                imageSource={item.imageSource}
+                style={styles.listItem}
+              />
             </Link>
           );
         }}

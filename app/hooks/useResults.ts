@@ -1,22 +1,30 @@
+import { goals } from "@/lib/placeholder-data";
 import { useEffect, useState } from "react";
+import { type Goal } from "../interfaces/Goal";
 
 type Results = [
   handleOnTermSubmit: (st: string) => Promise<void>,
-  results: string,
+  results: Goal[],
   errorMessage: string
 ];
 
 export function useResults(): Results {
   const [errorMessage, setErrorMessage] = useState("");
-  const [results, setResults] = useState("");
+  const [results, setResults] = useState<Goal[]>([]);
 
   const handleOnTermSubmit = async (st: string) => {
     try {
-      console.log(st);
-
       // TODO: Make use of axios to fetch data from server
       // then set the data as results, unless the result is an error.
-      setResults("");
+      const filteredGoals: Goal[] = goals.filter((goal) => {
+        const res = goal.title.toLowerCase().search(st.toLowerCase());
+        return res > -1;
+      });
+
+      console.log("filtered:\t\t", filteredGoals);
+
+      setResults(filteredGoals);
+
       console.warn("Not implemented yet");
     } catch (e: unknown) {
       setErrorMessage("Something went wrong");

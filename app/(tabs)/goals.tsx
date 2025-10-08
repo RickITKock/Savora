@@ -1,6 +1,7 @@
 import GoalList from "@/components/GoalsList";
 import { SearchBar } from "@/components/SearchBar";
 import { useResults } from "@/hooks/useResults";
+// import { goals } from "@/lib/placeholder-data";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
@@ -11,26 +12,8 @@ const GoalsScreen = (props: unknown) => {
   const [term, setTerm] = useState("");
   const [handleOnTermSubmit, results, errorMessage] = useResults();
 
-  const goals = [
-    {
-      id: "1",
-      title: "Buy a new laptop",
-      category: "Electronics",
-      imageSource: require("../../assets/beach.jpg"),
-    },
-    {
-      id: "2",
-      title: "Save for vacation",
-      category: "Travel",
-      imageSource: require("../../assets/forest.jpg"),
-    },
-    {
-      id: "3",
-      title: "Pay off credit card",
-      category: "Finances",
-      imageSource: require("../../assets/mountain.jpg"),
-    },
-  ];
+  console.log(results);
+  
 
   return (
     <View style={styles.view}>
@@ -42,7 +25,7 @@ const GoalsScreen = (props: unknown) => {
         onTermSubmit={() => handleOnTermSubmit(term)}
       />
       {errorMessage && <Text>{errorMessage}</Text>}
-      <GoalList results={goals} title="All" />
+      <GoalList results={results} title="All" />
       <Button
         onPress={() => router.navigate("/(goals)/AddGoal")}
         mode="contained"
