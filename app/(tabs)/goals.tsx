@@ -1,14 +1,15 @@
 import GoalListItem from "@/components/GoalListItem";
 import { SearchBar } from "@/components/SearchBar";
+import { useResults } from "@/hooks/useResults";
 import { useRouter } from "expo-router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import { Button } from "react-native-paper";
 
 const GoalsScreen = (props: unknown) => {
   const router = useRouter();
   const [term, setTerm] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [handleOnTermSubmit, results, errorMessage] = useResults();
 
   const goals = [
     {
@@ -30,20 +31,6 @@ const GoalsScreen = (props: unknown) => {
       imageSource: require("../../assets/mountain.jpg"),
     },
   ];
-
-  const handleOnTermSubmit = async (st: string) => {
-    try {
-      console.log(st);
-    } catch (e: unknown) {
-      setErrorMessage("Something went wrong");
-    }
-  };
-
-  // We want to get the default results first when the screen
-  // gets rendered for the first time.
-  useEffect(() => {
-    handleOnTermSubmit('')
-  }, [])
 
   return (
     <View style={styles.view}>
