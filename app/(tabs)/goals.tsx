@@ -1,11 +1,6 @@
 import GoalListItem from "@/components/GoalListItem";
 import { useRouter } from "expo-router";
-import {
-  FlatList,
-  StyleSheet,
-  Text,
-  View
-} from "react-native";
+import { FlatList, StyleSheet, Text, View } from "react-native";
 import { Button } from "react-native-paper";
 
 const GoalsScreen = (props: unknown) => {
@@ -27,7 +22,7 @@ const GoalsScreen = (props: unknown) => {
     {
       id: "3",
       title: "Pay off credit card",
-      category: "Finance",
+      category: "Finances",
       imageSource: require("../../assets/mountain.jpg"),
     },
   ];
@@ -41,6 +36,7 @@ const GoalsScreen = (props: unknown) => {
         renderItem={({ item }) => {
           return (
             <GoalListItem
+              style={styles.listItem}
               title={item.title}
               subtitle={item.category}
               imageSource={item.imageSource}
@@ -61,7 +57,7 @@ const GoalsScreen = (props: unknown) => {
 const styles = StyleSheet.create({
   view: { flex: 1 },
   listItem: {
-    marginVertical: 20,
+    marginVertical: 16,
   },
 });
 

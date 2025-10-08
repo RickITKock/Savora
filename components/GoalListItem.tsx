@@ -18,7 +18,7 @@ export default function GoalListItem({
   style,
 }: Props) {
   return (
-    <Card mode="contained" style={styles.card}>
+    <Card mode="contained" style={[styles.card, style]}>
       <Card.Content>
         <Image source={imageSource} />
         <Text variant="titleLarge">{title}</Text>
