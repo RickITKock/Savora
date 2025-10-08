@@ -1,19 +1,34 @@
 import { useLocalSearchParams, useNavigation } from "expo-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Text } from "react-native-paper";
+import { findOneById } from "../api/goals";
+import { Goal } from "../interfaces/Goal";
 
-export default function Goal() {
-  const { id } = useLocalSearchParams<{id: string}>()
+export default function GoalScreen() {
+  const { id } = useLocalSearchParams<{ id: string }>();
   const navigation = useNavigation();
+  const [result, setResult] = useState<Goal>();
+
+  async function getResult(id: string) {
+    const { data } = await findOneById(id);
+    if (data) setResult(data);
+  }
 
   useEffect(() => {
-    navigation.setOptions({ headerShown: true, title: "" });
-  }, [navigation]);
+    getResult(id);
+  }, []);
+
+  useEffect(() => {
+    if (result) {
+      navigation.setOptions({ headerShown: true, title: result.title });
+    }
+  }, [navigation, result]);
 
   return (
     <View style={styles.container}>
-      <Text>Results Show</Text>
+      <Text>{result?.title}</Text>
+      <Text>{result?.category}</Text>
     </View>
   );
 }

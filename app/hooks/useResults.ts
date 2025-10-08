@@ -1,5 +1,5 @@
-import { goals } from "@/lib/placeholder-data";
 import { useEffect, useState } from "react";
+import { findByTitle } from "../api/goals";
 import { type Goal } from "../interfaces/Goal";
 
 type Results = [
@@ -16,16 +16,12 @@ export function useResults(): Results {
     try {
       // TODO: Make use of axios to fetch data from server
       // then set the data as results, unless the result is an error.
-      const filteredGoals: Goal[] = goals.filter((goal) => {
-        const res = goal.title.toLowerCase().search(st.toLowerCase());
-        return res > -1;
-      });
+      const response = await findByTitle(st);
 
-      console.log("filtered:\t\t", filteredGoals);
-
-      setResults(filteredGoals);
-
-      console.warn("Not implemented yet");
+      if (Array.isArray(response.data)) {
+        const { data } = response;
+        setResults(data);
+      }
     } catch (e: unknown) {
       setErrorMessage("Something went wrong");
 
