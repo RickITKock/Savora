@@ -31,7 +31,7 @@ export const GoalsList: React.FC<Props> = ({ title, results }) => {
           return (
             <Link
               href={{
-                pathname: "/goals/[id]",
+                pathname: "/(goals)/[id]",
                 params: { id: item.id },
               }}
               style={styles.listItemContainer}

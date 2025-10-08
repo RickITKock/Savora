@@ -47,7 +47,7 @@ const GoalsScreen = (props: unknown) => {
         onPress={() => router.navigate("/(goals)/AddGoal")}
         mode="contained"
       >
-        <Text>Add Goal</Text>
+        <Text>Add Goals</Text>
       </Button>
     </View>
   );
