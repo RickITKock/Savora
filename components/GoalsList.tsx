@@ -27,6 +27,7 @@ export const GoalsList: React.FC<Props> = ({ title, results }) => {
               style={styles.listItemContainer}
             >
               <GoalListItem
+                id={item.id}
                 title={item.title}
                 subtitle={item.category}
                 imageSource={item.imageSource}

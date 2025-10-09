@@ -3,15 +3,10 @@ import { StyleSheet, View } from "react-native";
 import { Button, Card, Text, TextInput } from "react-native-paper";
 import { Context as GoalContext } from "../context/GoalContext";
 
-type Action = {
-  type: "goal" | "category" | "date";
-  content: string;
-};
-
 export default function AddGoalScreen() {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
-  const { state, addGoal } = useContext(GoalContext);
+  const { addGoal } = useContext(GoalContext);
 
   return (
     <View style={styles.view}>
@@ -32,7 +27,6 @@ export default function AddGoalScreen() {
         mode="contained"
         onPress={() =>
           addGoal({
-            id: "1",
             category,
             title,
             imageSource: "src",
