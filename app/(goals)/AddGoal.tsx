@@ -1,7 +1,7 @@
-import { useContext, useEffect, useReducer } from "react";
+import { useContext, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Button, Card, Text, TextInput } from "react-native-paper";
-import GoalContext from "../context/GoalContext";
+import { Context as GoalContext } from "../context/GoalContext";
 
 type Action = {
   type: "goal" | "category" | "date";
@@ -9,42 +9,22 @@ type Action = {
 };
 
 export default function AddGoalScreen() {
-  const { goals, addGoal } = useContext(GoalContext);
-
-  const reducer = (state: any, action: Action) => {
-    switch (action.type) {
-      case "goal":
-        return { ...state, goal: action.content };
-      case "category":
-        return { ...state, category: action.content };
-      default:
-        return state;
-    }
-  };
-
-  const [state, dispatch] = useReducer(reducer, {
-    goal: "",
-    category: "",
-    targetDate: new Date(),
-  });
-
-  // TODO: Remove this after you're done
-  useEffect(() => {
-    console.log("Goals", goals.length);
-  }, [goals]);
+  const [title, setTitle] = useState("");
+  const [category, setCategory] = useState("");
+  const { state, addGoal } = useContext(GoalContext);
 
   return (
     <View style={styles.view}>
       <TextInput
         style={styles.input}
         label="Goal"
-        onChangeText={(text) => dispatch({ type: "goal", content: text })}
+        onChangeText={(text) => setTitle(text)}
       />
 
       <TextInput
         style={styles.input}
         label="Category"
-        onChangeText={(text) => dispatch({ type: "category", content: text })}
+        onChangeText={(text) => setCategory(text)}
       />
 
       <Button
@@ -53,8 +33,8 @@ export default function AddGoalScreen() {
         onPress={() =>
           addGoal({
             id: "1",
-            category: state.category,
-            title: state.goal,
+            category,
+            title,
             imageSource: "src",
           })
         }
@@ -62,7 +42,7 @@ export default function AddGoalScreen() {
         + Create Goal
       </Button>
 
-      {!(state.goal === state.goal && state.goal === "") && (
+      {!(title === category && title === "") && (
         <>
           <Text variant="titleLarge" style={{ marginTop: 16 }}>
             Summary
@@ -72,8 +52,8 @@ export default function AddGoalScreen() {
               <Card.Title
                 titleStyle={styles.summaryTitle}
                 subtitleStyle={styles.summarySubtitle}
-                title={state.goal}
-                subtitle={state.category}
+                title={title}
+                subtitle={category}
               />
             </Card.Content>
           </Card>

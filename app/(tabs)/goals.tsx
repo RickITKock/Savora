@@ -5,25 +5,25 @@ import { useRouter } from "expo-router";
 import { useContext, useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Button } from "react-native-paper";
-import GoalContext from "../context/GoalContext";
+import { Context as GoalContext } from "../context/GoalContext";
 
 const GoalsScreen = () => {
   const router = useRouter();
   const [term, setTerm] = useState("");
   const [handleOnTermSubmit, results, errorMessage] = useResults();
-  const { goals } = useContext(GoalContext)
+  const { state } = useContext(GoalContext)
 
   if (!results) return null
 
   // TODO: Need to consider limiting the amount of searches per second
   useEffect(() => {
     handleOnTermSubmit(term)
-    console.log("Goals loaded:\t", goals);
+    console.log("Goals loaded:\t", state);
   }, [term])
 
   useEffect(() => {
-    console.log("Goals loaded:\t", goals);
-  }, [goals])
+    console.log("state loaded:\t", state);
+  }, [state])
 
   return (
     <View style={styles.view}>
@@ -34,7 +34,7 @@ const GoalsScreen = () => {
         onTermChange={setTerm}
       />
       {errorMessage && <Text>{errorMessage}</Text>}
-      <GoalList results={goals} title={ term === "" ? "All" : `"${term}"`} />
+      <GoalList results={state} title={ term === "" ? "All" : `"${term}"`} />
       <Button
         onPress={() => router.navigate("/(goals)/AddGoal")}
         mode="contained"

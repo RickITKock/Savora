@@ -1,5 +1,5 @@
 import { Stack } from "expo-router";
-import { GoalProvider } from "../context/GoalContext";
+import { Provider as GoalProvider } from "../context/GoalContext";
 
 export default function GoalsLayout() {
   return (

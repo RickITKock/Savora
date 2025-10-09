@@ -3,7 +3,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import Octicons from "@expo/vector-icons/Octicons";
 import { Tabs, useRouter } from "expo-router";
 import { StyleSheet } from "react-native";
-import { GoalProvider } from "../context/GoalContext";
+import { Provider as GoalProvider } from "../context/GoalContext";
 
 export default function TabsLayout() {
   const router = useRouter();

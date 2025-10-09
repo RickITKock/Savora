@@ -1,13 +1,6 @@
-import { createContext, useReducer, type PropsWithChildren } from "react";
+import { Dispatch } from "react";
 import { Goal } from "../interfaces/Goal";
-
-const GoalContext = createContext<{
-  goals: Goal[];
-  addGoal: (goal: Goal) => void;
-}>({
-  goals: [],
-  addGoal: () => null,
-});
+import createDataContext from "./createDataContext";
 
 type Action = {
   type: "add_goal";
@@ -23,30 +16,14 @@ const goalReducer = (state: Goal[], action: Action): Goal[] => {
   }
 };
 
-export const GoalProvider = ({ children }: PropsWithChildren) => {
-  const [goals, dispatch] = useReducer(goalReducer, [
-    // {
-    //   id: "1",
-    //   title: "Buy a new laptop",
-    //   category: "Electronics",
-    //   imageSource: "src", // require("../assets/images/beach.jpg"), //require("@/assets/images/beach.jpg"), //"../../assets/beach.jpg"),
-    // },
-  ]);
-
-  const addGoal = (goal: Goal): void => {
+const addGoal = (dispatch: Dispatch<Action>) => {
+  return (goal: Goal) => {
     dispatch({ type: "add_goal", payload: goal });
   };
-
-  return (
-    <GoalContext.Provider
-      value={{
-        goals,
-        addGoal,
-      }}
-    >
-      {children}
-    </GoalContext.Provider>
-  );
 };
 
-export default GoalContext;
+export const { Context, Provider } = createDataContext(
+  goalReducer,
+  { addGoal },
+  [] as Goal[]
+);
