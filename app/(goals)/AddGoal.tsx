@@ -1,6 +1,7 @@
-import { useReducer } from "react";
+import { useContext, useEffect, useReducer } from "react";
 import { StyleSheet, View } from "react-native";
 import { Button, Card, Text, TextInput } from "react-native-paper";
+import GoalContext from "../context/GoalContext";
 
 type Action = {
   type: "goal" | "category" | "date";
@@ -8,9 +9,9 @@ type Action = {
 };
 
 export default function AddGoalScreen() {
-  const reducer = (state: any, action: Action) => {
-    console.log(state);
+  const { goals, addGoal } = useContext(GoalContext);
 
+  const reducer = (state: any, action: Action) => {
     switch (action.type) {
       case "goal":
         return { ...state, goal: action.content };
@@ -26,6 +27,11 @@ export default function AddGoalScreen() {
     category: "",
     targetDate: new Date(),
   });
+
+  // TODO: Remove this after you're done
+  useEffect(() => {
+    console.log("Goals", goals.length);
+  }, [goals]);
 
   return (
     <View style={styles.view}>
@@ -44,14 +50,23 @@ export default function AddGoalScreen() {
       <Button
         style={styles.btnCreateGoal}
         mode="contained"
-        onPress={() => console.log(state)}
+        onPress={() =>
+          addGoal({
+            id: "1",
+            category: state.category,
+            title: state.goal,
+            imageSource: "src",
+          })
+        }
       >
         + Create Goal
       </Button>
 
       {!(state.goal === state.goal && state.goal === "") && (
         <>
-          <Text variant="titleLarge" style={{ marginTop: 16 }}>Summary</Text>
+          <Text variant="titleLarge" style={{ marginTop: 16 }}>
+            Summary
+          </Text>
           <Card style={styles.goalSummary}>
             <Card.Content>
               <Card.Title
