@@ -3,7 +3,6 @@ import { StyleSheet } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 // TODO: Configure axios instance for API calls
-// TODO: Navigate with params
 // TODO: Advanced state management
 // TODO: Data API sync
 // TODO: Build a custom Express API

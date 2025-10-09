@@ -1,19 +1,22 @@
 import GoalList from "@/components/GoalsList";
 import { SearchBar } from "@/components/SearchBar";
 import { useResults } from "@/hooks/useResults";
-// import { goals } from "@/lib/placeholder-data";
 import { useRouter } from "expo-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Button } from "react-native-paper";
 
-const GoalsScreen = (props: unknown) => {
+const GoalsScreen = () => {
   const router = useRouter();
   const [term, setTerm] = useState("");
   const [handleOnTermSubmit, results, errorMessage] = useResults();
 
-  console.log(results);
-  
+  if (!results) return null
+
+  // TODO: Need to consider limiting the amount of searches per second
+  useEffect(() => {
+    handleOnTermSubmit(term)
+  }, [term])
 
   return (
     <View style={styles.view}>
@@ -22,7 +25,6 @@ const GoalsScreen = (props: unknown) => {
         term={term}
         style={styles.searchBar}
         onTermChange={setTerm}
-        onTermSubmit={() => handleOnTermSubmit(term)}
       />
       {errorMessage && <Text>{errorMessage}</Text>}
       <GoalList results={results} title="All" />
@@ -30,14 +32,14 @@ const GoalsScreen = (props: unknown) => {
         onPress={() => router.navigate("/(goals)/AddGoal")}
         mode="contained"
       >
-        <Text>Add Goals</Text>
+        <Text>+ Add Goal</Text>
       </Button>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  view: { flex: 1 },
+  view: { flex: 1, margin: 16 },
   searchBar: {
     marginTop: 10,
     marginBottom: 10,

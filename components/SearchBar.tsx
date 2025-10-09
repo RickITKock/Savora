@@ -1,4 +1,4 @@
-import EvilIcons from '@expo/vector-icons/EvilIcons';
+import EvilIcons from "@expo/vector-icons/EvilIcons";
 import {
   type StyleProp,
   StyleSheet,
@@ -17,7 +17,7 @@ export const SearchBar = ({
   style?: StyleProp<ViewStyle>;
   term: string;
   onTermChange: (text: string) => void;
-  onTermSubmit: (e: TextInputEndEditingEvent) => void;
+  onTermSubmit?: (e: TextInputEndEditingEvent) => void;
 }) => {
   return (
     <View style={[styles.searchBarBackground, style]}>
@@ -27,7 +27,7 @@ export const SearchBar = ({
         placeholder="Search"
         value={term}
         onChangeText={(newTerm) => onTermChange(newTerm)}
-        onEndEditing={(e) => onTermSubmit(e)}
+        onEndEditing={(e) => onTermSubmit && onTermSubmit(e)}
       />
     </View>
   );
@@ -38,7 +38,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
     height: 50,
     borderRadius: 5,
-    marginHorizontal: 15,
     flexDirection: "row",
   },
   inputStyle: {
