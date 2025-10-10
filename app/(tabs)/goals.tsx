@@ -8,7 +8,7 @@ import { Context as GoalContext } from "../context/GoalContext";
 const GoalsScreen = () => {
   const [term, setTerm] = useState("");
   const [handleOnTermSubmit, results, errorMessage] = useResults();
-  const { state } = useContext(GoalContext);
+  const { state, getGoals } = useContext(GoalContext);
 
   if (!results) return null;
 
@@ -20,6 +20,7 @@ const GoalsScreen = () => {
 
   useEffect(() => {
     console.log("state loaded:\t", state);
+    getGoals()
   }, [state]);
 
   return (

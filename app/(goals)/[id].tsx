@@ -25,7 +25,7 @@ export default function GoalScreen() {
                 params: { id },
               }}
             >
-              <Foundation name="pencil" size={30} color="black" />
+              <Foundation name="pencil" size={24} color="black" />
             </Link>
           );
         },

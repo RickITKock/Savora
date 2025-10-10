@@ -1,10 +1,16 @@
+import { tablesDB } from "@/lib/appwrite";
 import { Dispatch } from "react";
+import { Query } from "react-native-appwrite";
 import { Goal } from "../interfaces/Goal";
 import createDataContext from "./createDataContext";
 
 type NewGoal = Omit<Goal, "id">;
 
 type Action =
+  | {
+      type: "get_goals";
+      payload: any[]; // TODO: Use Goal interface
+    }
   | {
       type: "add_goal";
       payload: NewGoal;
@@ -24,6 +30,8 @@ function getRandomNumber(): number {
 
 const goalReducer = (state: Goal[], action: Action): Goal[] => {
   switch (action.type) {
+    case "get_goals":
+      return action.payload;
     case "add_goal":
       const id = getRandomNumber().toString();
       return [...state, { ...action.payload, id }];
@@ -60,9 +68,22 @@ const deleteGoal = (dispatch: Dispatch<Action>) => {
   };
 };
 
+// Fetch all 4 goals from appwrite's goals table in db savora
+const getGoals = (dispatch: Dispatch<Action>) => {
+  return async () => {
+    const response = await tablesDB.listRows({
+      databaseId: "68e9728f00290b8c80f8",
+      tableId: "goals",
+      queries: [Query.orderDesc("$createdAt"), Query.limit(10)],
+    });
+    console.log(response);
+    // dispatch({type: "get_goals", payload: response})
+  };
+};
+
 export const { Context, Provider } = createDataContext(
   goalReducer,
-  { addGoal, editGoal, deleteGoal },
+  { addGoal, editGoal, deleteGoal, getGoals },
   [
     {
       id: "1",
