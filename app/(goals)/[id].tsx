@@ -1,4 +1,5 @@
-import { useLocalSearchParams, useNavigation } from "expo-router";
+import Foundation from "@expo/vector-icons/Foundation";
+import { Link, useLocalSearchParams, useNavigation } from "expo-router";
 import { useContext, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { Text } from "react-native-paper";
@@ -9,11 +10,26 @@ export default function GoalScreen() {
   const { state } = useContext(GoalContext);
   const navigation = useNavigation();
 
-  const goal = state.find(goal => goal.id === id)
+  const goal = state.find((goal) => goal.id === id);
 
   useEffect(() => {
     if (goal) {
-      navigation.setOptions({ headerShown: true, title: goal.title });
+      navigation.setOptions({
+        headerShown: true,
+        title: goal.title,
+        headerRight: () => {
+          return (
+            <Link
+              href={{
+                pathname: "/(goals)/EditGoal",
+                params: { id },
+              }}
+            >
+              <Foundation name="pencil" size={30} color="black" />
+            </Link>
+          );
+        },
+      });
     }
   }, [navigation, goal]);
 

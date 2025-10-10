@@ -10,6 +10,10 @@ type Action =
       payload: NewGoal;
     }
   | {
+      type: "edit_goal";
+      payload: Goal;
+    }
+  | {
       type: "delete_goal";
       payload: string;
     };
@@ -23,6 +27,10 @@ const goalReducer = (state: Goal[], action: Action): Goal[] => {
     case "add_goal":
       const id = getRandomNumber().toString();
       return [...state, { ...action.payload, id }];
+    case "edit_goal":
+      return state.map((goal) => {
+        return goal.id === action.payload.id ? action.payload : goal;
+      });
     case "delete_goal":
       return state.filter((goal) => goal.id !== action.payload);
     default:
@@ -32,7 +40,15 @@ const goalReducer = (state: Goal[], action: Action): Goal[] => {
 
 const addGoal = (dispatch: Dispatch<Action>) => {
   return (goal: NewGoal) => {
-    dispatch({ type: "add_goal", payload: goal });    
+    console.log("Goal Added:\t", goal);
+
+    dispatch({ type: "add_goal", payload: goal });
+  };
+};
+
+const editGoal = (dispatch: Dispatch<Action>) => {
+  return (id: string, goal: NewGoal) => {
+    dispatch({ type: "edit_goal", payload: { ...goal, id } });
   };
 };
 
@@ -44,7 +60,7 @@ const deleteGoal = (dispatch: Dispatch<Action>) => {
 
 export const { Context, Provider } = createDataContext(
   goalReducer,
-  { addGoal, deleteGoal },
+  { addGoal, editGoal, deleteGoal },
   [
     {
       id: "1",
