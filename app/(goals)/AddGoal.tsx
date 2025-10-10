@@ -1,11 +1,11 @@
 import GoalForm from "@/components/GoalForm";
+import { useRouter } from "expo-router";
 import { useContext } from "react";
 import { Context as GoalContext } from "../context/GoalContext";
 
 export default function AddGoalScreen() {
-  const { state, addGoal } = useContext(GoalContext);
+  const { addGoal } = useContext(GoalContext);
+  const router = useRouter();
 
-  // TODO: Add a callback to redirect the user to the previous page
-
-  return <GoalForm onSubmit={addGoal} />;
+  return <GoalForm onSubmit={(goal) => addGoal(goal, () => router.back())} />;
 }

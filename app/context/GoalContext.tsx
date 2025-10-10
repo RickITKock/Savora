@@ -39,16 +39,18 @@ const goalReducer = (state: Goal[], action: Action): Goal[] => {
 };
 
 const addGoal = (dispatch: Dispatch<Action>) => {
-  return (goal: NewGoal) => {
+  return (goal: NewGoal, callback?: () => void) => {
     console.log("Goal Added:\t", goal);
 
     dispatch({ type: "add_goal", payload: goal });
+    if (callback) callback();
   };
 };
 
 const editGoal = (dispatch: Dispatch<Action>) => {
-  return (id: string, goal: NewGoal) => {
+  return (id: string, goal: NewGoal, callback?: () => void) => {
     dispatch({ type: "edit_goal", payload: { ...goal, id } });
+    if (callback) callback();
   };
 };
 
