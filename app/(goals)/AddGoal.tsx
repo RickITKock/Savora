@@ -1,46 +1,43 @@
+import Feather from "@expo/vector-icons/Feather";
 import { useContext, useState } from "react";
-import { StyleSheet, View } from "react-native";
-import { Button, Card, Text, TextInput } from "react-native-paper";
+import { StyleSheet, Text, TextInput, View } from "react-native";
+import { Button, Card } from "react-native-paper";
 import { Context as GoalContext } from "../context/GoalContext";
 
 export default function AddGoalScreen() {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
-  const { addGoal } = useContext(GoalContext);
+  const { state, addGoal } = useContext(GoalContext);
 
   return (
     <View style={styles.view}>
+      <Text style={styles.label}>Goal:</Text>
+      <TextInput style={styles.input} onChangeText={(text) => setTitle(text)} />
+      <Text style={styles.label}>Category:</Text>
       <TextInput
         style={styles.input}
-        label="Goal"
-        onChangeText={(text) => setTitle(text)}
-      />
-
-      <TextInput
-        style={styles.input}
-        label="Category"
         onChangeText={(text) => setCategory(text)}
       />
 
       <Button
         style={styles.btnCreateGoal}
         mode="contained"
-        onPress={() =>
+        onPress={() => {
           addGoal({
             category,
             title,
             imageSource: "src",
-          })
-        }
+          });
+
+          console.log(state);
+        }}
       >
-        + Create Goal
+        <Feather name="plus" /> Create Goal
       </Button>
 
       {!(title === category && title === "") && (
         <>
-          <Text variant="titleLarge" style={{ marginTop: 16 }}>
-            Summary
-          </Text>
+          <Text style={{ marginTop: 16 }}>Summary</Text>
           <Card style={styles.goalSummary}>
             <Card.Content>
               <Card.Title
@@ -59,11 +56,16 @@ export default function AddGoalScreen() {
 
 const styles = StyleSheet.create({
   view: { flex: 1, margin: 16 },
-  btnCreateGoal: { borderRadius: 5, marginTop: 16 },
+  btnCreateGoal: { borderRadius: 5, marginTop: 16, fontSize: 18 },
   input: {
-    marginTop: 16,
+    marginBottom: 15,
+    fontSize: 18,
     backgroundColor: "white",
     borderEndEndRadius: 0,
+  },
+  label: {
+    fontSize: 20,
+    marginBottom: 5,
   },
   summarySubtitle: {
     color: "#b3b3b3",

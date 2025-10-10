@@ -1,8 +1,9 @@
 import Entypo from "@expo/vector-icons/Entypo";
+import Feather from "@expo/vector-icons/Feather";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import Octicons from "@expo/vector-icons/Octicons";
 import { Tabs, useRouter } from "expo-router";
-import { StyleSheet } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import { Provider as GoalProvider } from "../context/GoalContext";
 
 export default function TabsLayout() {
@@ -41,6 +42,15 @@ export default function TabsLayout() {
             title: "Goals",
             tabBarIcon: ({ color }) => {
               return <Octicons name="goal" size={24} color={color} />;
+            },
+            headerRight: () => {
+              return (
+                <TouchableOpacity
+                  onPress={() => router.navigate("/(goals)/AddGoal")}
+                >
+                  <Feather name="plus" size={24} color="black" />
+                </TouchableOpacity>
+              );
             },
           }}
         />

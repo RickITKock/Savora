@@ -32,7 +32,7 @@ const goalReducer = (state: Goal[], action: Action): Goal[] => {
 
 const addGoal = (dispatch: Dispatch<Action>) => {
   return (goal: NewGoal) => {
-    dispatch({ type: "add_goal", payload: goal });
+    dispatch({ type: "add_goal", payload: goal });    
   };
 };
 
