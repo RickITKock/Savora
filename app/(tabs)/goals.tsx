@@ -24,7 +24,6 @@ const GoalsScreen = () => {
 
   return (
     <View style={styles.view}>
-      <Text>Goals</Text>
       <SearchBar term={term} style={styles.searchBar} onTermChange={setTerm} />
       {errorMessage && <Text>{errorMessage}</Text>}
       <GoalList results={state} title={term === "" ? "All" : `"${term}"`} />
