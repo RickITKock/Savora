@@ -1,10 +1,26 @@
 import { tablesDB } from "@/lib/appwrite";
 import { Dispatch } from "react";
 import { Query } from "react-native-appwrite";
-import { Goal } from "../interfaces/Goal";
 import createDataContext from "./createDataContext";
 
-type NewGoal = Omit<Goal, "id">;
+import * as z from "zod";
+
+const Goal = z.object({
+  $id: z.string(),
+  title: z.string(),
+  category: z.string(),
+}).transform(({ $id, ...rest }) => ({
+  id: $id,
+  ...rest,
+}));
+
+const Goals = z.array(Goal);
+
+type GoalType = z.infer<typeof Goal>;
+
+type GoalTypeArray = z.infer<typeof Goals>;
+
+type NewGoal = Omit<GoalType, "id">;
 
 type Action =
   | {
@@ -17,7 +33,7 @@ type Action =
     }
   | {
       type: "edit_goal";
-      payload: Goal;
+      payload: GoalType;
     }
   | {
       type: "delete_goal";
@@ -28,7 +44,7 @@ function getRandomNumber(): number {
   return Math.floor(Math.random() * 99999);
 }
 
-const goalReducer = (state: Goal[], action: Action): Goal[] => {
+const goalReducer = (state: GoalType[], action: Action): GoalType[] => {
   switch (action.type) {
     case "get_goals":
       return action.payload;
@@ -76,8 +92,11 @@ const getGoals = (dispatch: Dispatch<Action>) => {
       tableId: "goals",
       queries: [Query.orderDesc("$createdAt"), Query.limit(10)],
     });
-    console.log(response);
-    // dispatch({type: "get_goals", payload: response})
+
+    const goals = Goals.parse(response.rows);
+    console.log(goals);
+
+    // dispatch({ type: "get_goals", payload: response })
   };
 };
 
@@ -85,18 +104,18 @@ export const { Context, Provider } = createDataContext(
   goalReducer,
   { addGoal, editGoal, deleteGoal, getGoals },
   [
-    {
-      id: "1",
-      title: "Buy a new laptop",
-      category: "Electronics",
-      imageSource: "src", // require("../assets/images/beach.jpg"), //require("@/assets/images/beach.jpg"), //"../../assets/beach.jpg"),
-    },
-    {
-      id: "2",
-      title: "Save for vacation",
-      category: "Travel",
-      imageSource: "src",
-      // imageSource: require("@/assets/images/forest.jpg"), // "../../assets/forest.jpg"),
-    },
-  ] as Goal[]
+    // {
+    //   id: "1",
+    //   title: "Buy a new laptop",
+    //   category: "Electronics",
+    //   // imageSource: "src", // require("../assets/images/beach.jpg"), //require("@/assets/images/beach.jpg"), //"../../assets/beach.jpg"),
+    // },
+    // {
+    //   id: "2",
+    //   title: "Save for vacation",
+    //   category: "Travel",
+    //   // imageSource: "src",
+    //   // imageSource: require("@/assets/images/forest.jpg"), // "../../assets/forest.jpg"),
+    // },
+  ] as GoalType[]
 );
