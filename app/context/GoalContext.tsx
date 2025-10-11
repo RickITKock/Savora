@@ -1,9 +1,12 @@
 import { tablesDB } from "@/lib/appwrite";
 import { Dispatch } from "react";
-import { Query } from "react-native-appwrite";
+import { ID, Query } from "react-native-appwrite";
 import createDataContext from "./createDataContext";
 
 import * as z from "zod";
+
+const SAVORA_DATABASE_ID = "68e9728f00290b8c80f8";
+const GOALS_TABLE_ID = "goals";
 
 const Goal = z
   .object({
@@ -64,12 +67,28 @@ const goalReducer = (state: GoalType[], action: Action): GoalType[] => {
   }
 };
 
+// TODO: Add a new goal to the goals table
 const addGoal = (dispatch: Dispatch<Action>) => {
-  return (goal: NewGoal, callback?: () => void) => {
+  return async (goal: NewGoal, callback?: () => void) => {
     // console.log("Goal Added:\t", goal);
 
-    dispatch({ type: "add_goal", payload: goal });
-    if (callback) callback();
+    try {
+      const response = await tablesDB.createRow({
+        databaseId: SAVORA_DATABASE_ID,
+        tableId: GOALS_TABLE_ID,
+        rowId: ID.unique(),
+        data: goal,
+        // permissions: [Permission.write(Role.user(idea.userId))],   // TODO: Set permissions
+      });
+
+      console.log(response);
+
+      // dispatch({ type: "add_goal", payload: goal });
+      if (callback) callback();
+    } catch (error: unknown) {
+      console.error("Failed to add a new goal:\n", error);
+      return;
+    }
   };
 };
 
@@ -86,12 +105,11 @@ const deleteGoal = (dispatch: Dispatch<Action>) => {
   };
 };
 
-// Fetch all 4 goals from appwrite's goals table in db savora
 const getGoals = (dispatch: Dispatch<Action>) => {
   return async () => {
     const response = await tablesDB.listRows({
-      databaseId: "68e9728f00290b8c80f8",
-      tableId: "goals",
+      databaseId: SAVORA_DATABASE_ID,
+      tableId: GOALS_TABLE_ID,
       queries: [Query.orderDesc("$createdAt"), Query.limit(10)],
     });
 

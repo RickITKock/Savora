@@ -32,7 +32,6 @@ const GoalForm = ({ onSubmit, initialValues }: Props) => {
         onPress={() =>
           onSubmit({
             category: category,
-            imageSource: "src",
             title: title,
           })
         }
