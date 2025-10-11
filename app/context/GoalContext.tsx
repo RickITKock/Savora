@@ -53,9 +53,6 @@ const goalReducer = (state: GoalType[], action: Action): GoalType[] => {
   switch (action.type) {
     case "get_goals":
       return action.payload;
-    case "add_goal":
-      const id = getRandomNumber().toString();
-      return [...state, { ...action.payload, id }];
     case "edit_goal":
       return state.map((goal) => {
         return goal.id === action.payload.id ? action.payload : goal;

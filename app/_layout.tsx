@@ -1,6 +1,7 @@
 import { Stack } from "expo-router";
 import { StyleSheet } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { Provider as GoalProvider } from "./context/GoalContext"; // from "../context/GoalContext";
 
 // TODO: Configure axios instance for API calls
 // TODO: Advanced state management
@@ -13,15 +14,19 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 // TODO: Release engineering (analytics, CI/CD, OTA, Stores, etc.)
 
 export default function RootLayout() {
-
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={styles.safeArea} edges={["left", "right", "top", "bottom"]}>
-        <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="(auth)"  />
-          <Stack.Screen name="(goals)"  />
-          <Stack.Screen name="(tabs)" />
-        </Stack>
+      <SafeAreaView
+        style={styles.safeArea}
+        edges={["left", "right", "top", "bottom"]}
+      >
+        <GoalProvider>
+          <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="(auth)" />
+            <Stack.Screen name="(goals)" />
+            <Stack.Screen name="(tabs)" />
+          </Stack>
+        </GoalProvider>
       </SafeAreaView>
     </SafeAreaProvider>
   );

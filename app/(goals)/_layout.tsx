@@ -1,13 +1,10 @@
 import { Stack } from "expo-router";
-import { Provider as GoalProvider } from "../context/GoalContext";
 
 export default function GoalsLayout() {
   return (
-    <GoalProvider>
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="[id]" />
-        <Stack.Screen name="AddGoal" options={{ title: "Add new Goal" }} />
-      </Stack>
-    </GoalProvider>
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="[id]" />
+      <Stack.Screen name="AddGoal" options={{ title: "Add new Goal" }} />
+    </Stack>
   );
 }

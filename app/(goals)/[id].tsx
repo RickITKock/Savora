@@ -11,8 +11,10 @@ export default function GoalScreen() {
   const navigation = useNavigation();
 
   const goal = state.find((goal) => goal.id === id);
+  console.log(state);
 
   useEffect(() => {
+    
     if (goal) {
       navigation.setOptions({
         headerShown: true,
