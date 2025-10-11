@@ -1,12 +1,8 @@
 import { Stack } from "expo-router";
 import { StyleSheet } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import { Provider as GoalProvider } from "./context/GoalContext"; // from "../context/GoalContext";
+import { Provider as GoalProvider } from "./context/GoalContext";
 
-// TODO: Configure axios instance for API calls
-// TODO: Advanced state management
-// TODO: Data API sync
-// TODO: Build a custom Express API
 // TODO: Add in-app authentication (e.g., supabase, firebase, or custom)
 // TODO: Add animations
 // TODO: Improve performance

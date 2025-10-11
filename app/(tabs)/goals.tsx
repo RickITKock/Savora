@@ -1,25 +1,25 @@
 import GoalList from "@/components/GoalsList";
 import { SearchBar } from "@/components/SearchBar";
-import { useResults } from "@/hooks/useResults";
 import { useNavigation } from "expo-router";
-import { useContext, useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { useContext, useEffect, useMemo, useState } from "react";
+import { StyleSheet, View } from "react-native";
 import { Context as GoalContext } from "../context/GoalContext";
 
 const GoalsScreen = () => {
   const [term, setTerm] = useState("");
-  const [handleOnTermSubmit, results, errorMessage] = useResults();
   const { state, getGoals } = useContext(GoalContext);
 
   const navigation = useNavigation();
 
-  if (!results) return null;
+  const results = useMemo(() => {
+    const t = term.trim().toLowerCase();
 
-  // TODO: Need to consider limiting the amount of searches per second
-  // TODO: Fix the search function 
-  useEffect(() => {
-    handleOnTermSubmit(term);
-  }, [term]);
+    if (!t) return state;
+
+    return state.filter((g) =>
+      [g.title, g.category].some((v) => v?.toLowerCase().includes(t))
+    );
+  }, [state, term]);
 
   useEffect(() => {
     getGoals();
@@ -28,14 +28,15 @@ const GoalsScreen = () => {
       getGoals();
     });
 
-    return listener; // return the function to unsubscribe
+    // return the function to unsubscribe
+    return listener;
   }, [navigation]);
 
   return (
     <View style={styles.view}>
       <SearchBar term={term} style={styles.searchBar} onTermChange={setTerm} />
-      {errorMessage && <Text>{errorMessage}</Text>}
-      <GoalList results={state} title={term === "" ? "All" : `"${term}"`} />
+      {/* {errorMessage && <Text>{errorMessage}</Text>} */}
+      <GoalList results={results} title={term === "" ? "All" : `"${term}"`} />
     </View>
   );
 };

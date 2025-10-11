@@ -29,6 +29,10 @@ type NewGoal = Omit<GoalType, "id">;
 
 type Action =
   | {
+      type: "find_goals";
+      payload: string;
+    }
+  | {
       type: "get_goals";
       payload: any[]; // TODO: Use Goal interface
     }
@@ -108,7 +112,7 @@ const deleteGoal = (dispatch: Dispatch<Action>) => {
 
       // Keeping the dispatch code here to refresh the screen
       // We don't strictly need to add a listener as we did
-      // when adding a new goal
+      // when adding a new goal.
       dispatch({ type: "delete_goal", payload: id });
     } catch (error: unknown) {
       console.error("Failed to delete a goal:\n", error);
@@ -137,6 +141,6 @@ const getGoals = (dispatch: Dispatch<Action>) => {
 
 export const { Context, Provider } = createDataContext(
   goalReducer,
-  { addGoal, editGoal, deleteGoal, getGoals },
+  { addGoal, editGoal, deleteGoal, getGoals, },
   [] as GoalType[]
 );

@@ -11,7 +11,6 @@ export default function GoalScreen() {
   const navigation = useNavigation();
 
   const goal = state.find((goal) => goal.id === id);
-  console.log(state);
 
   useEffect(() => {
     
