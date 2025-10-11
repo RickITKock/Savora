@@ -1,6 +1,7 @@
 import GoalList from "@/components/GoalsList";
 import { SearchBar } from "@/components/SearchBar";
 import { useResults } from "@/hooks/useResults";
+import { useNavigation } from "expo-router";
 import { useContext, useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Context as GoalContext } from "../context/GoalContext";
@@ -10,18 +11,25 @@ const GoalsScreen = () => {
   const [handleOnTermSubmit, results, errorMessage] = useResults();
   const { state, getGoals } = useContext(GoalContext);
 
+  const navigation = useNavigation();
+
   if (!results) return null;
 
   // TODO: Need to consider limiting the amount of searches per second
+  // TODO: Fix the search function 
   useEffect(() => {
     handleOnTermSubmit(term);
-    // console.log("Goals loaded:\t", state);
   }, [term]);
 
   useEffect(() => {
-    // console.log("state loaded:\t", state);
-    getGoals()
-  }, []);
+    getGoals();
+
+    const listener = navigation.addListener("focus", () => {
+      getGoals();
+    });
+
+    return listener; // return the function to unsubscribe
+  }, [navigation]);
 
   return (
     <View style={styles.view}>
