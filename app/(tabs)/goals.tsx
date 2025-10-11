@@ -15,13 +15,13 @@ const GoalsScreen = () => {
   // TODO: Need to consider limiting the amount of searches per second
   useEffect(() => {
     handleOnTermSubmit(term);
-    console.log("Goals loaded:\t", state);
+    // console.log("Goals loaded:\t", state);
   }, [term]);
 
   useEffect(() => {
-    console.log("state loaded:\t", state);
+    // console.log("state loaded:\t", state);
     getGoals()
-  }, [state]);
+  }, []);
 
   return (
     <View style={styles.view}>

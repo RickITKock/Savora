@@ -5,14 +5,16 @@ import createDataContext from "./createDataContext";
 
 import * as z from "zod";
 
-const Goal = z.object({
-  $id: z.string(),
-  title: z.string(),
-  category: z.string(),
-}).transform(({ $id, ...rest }) => ({
-  id: $id,
-  ...rest,
-}));
+const Goal = z
+  .object({
+    $id: z.string(),
+    title: z.string(),
+    category: z.string(),
+  })
+  .transform(({ $id, ...rest }) => ({
+    id: $id,
+    ...rest,
+  }));
 
 const Goals = z.array(Goal);
 
@@ -64,7 +66,7 @@ const goalReducer = (state: GoalType[], action: Action): GoalType[] => {
 
 const addGoal = (dispatch: Dispatch<Action>) => {
   return (goal: NewGoal, callback?: () => void) => {
-    console.log("Goal Added:\t", goal);
+    // console.log("Goal Added:\t", goal);
 
     dispatch({ type: "add_goal", payload: goal });
     if (callback) callback();
@@ -96,7 +98,7 @@ const getGoals = (dispatch: Dispatch<Action>) => {
     const goals = Goals.parse(response.rows);
     console.log(goals);
 
-    // dispatch({ type: "get_goals", payload: response })
+    dispatch({ type: "get_goals", payload: goals });
   };
 };
 
