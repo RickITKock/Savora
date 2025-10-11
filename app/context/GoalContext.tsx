@@ -45,10 +45,7 @@ type Action =
       payload: string;
     };
 
-function getRandomNumber(): number {
-  return Math.floor(Math.random() * 99999);
-}
-
+// TODO: Set permissions on all db related calls
 const goalReducer = (state: GoalType[], action: Action): GoalType[] => {
   switch (action.type) {
     case "get_goals":
@@ -64,23 +61,16 @@ const goalReducer = (state: GoalType[], action: Action): GoalType[] => {
   }
 };
 
-// TODO: Add a new goal to the goals table
-const addGoal = (dispatch: Dispatch<Action>) => {
+const addGoal = () => {
   return async (goal: NewGoal, callback?: () => void) => {
-    // console.log("Goal Added:\t", goal);
-
     try {
-      const response = await tablesDB.createRow({
+      await tablesDB.createRow({
         databaseId: SAVORA_DATABASE_ID,
         tableId: GOALS_TABLE_ID,
         rowId: ID.unique(),
         data: goal,
-        // permissions: [Permission.write(Role.user(idea.userId))],   // TODO: Set permissions
       });
 
-      console.log(response);
-
-      // dispatch({ type: "add_goal", payload: goal });
       if (callback) callback();
     } catch (error: unknown) {
       console.error("Failed to add a new goal:\n", error);
@@ -90,49 +80,63 @@ const addGoal = (dispatch: Dispatch<Action>) => {
 };
 
 const editGoal = (dispatch: Dispatch<Action>) => {
-  return (id: string, goal: NewGoal, callback?: () => void) => {
-    dispatch({ type: "edit_goal", payload: { ...goal, id } });
-    if (callback) callback();
+  return async (id: string, goal: NewGoal, callback?: () => void) => {
+    try {
+      await tablesDB.updateRow({
+        databaseId: SAVORA_DATABASE_ID,
+        tableId: GOALS_TABLE_ID,
+        rowId: id,
+        data: goal,
+      });
+      dispatch({ type: "edit_goal", payload: { ...goal, id } });
+      if (callback) callback();
+    } catch (error: unknown) {
+      console.error("Failed to update goal:\n", error);
+      return;
+    }
   };
 };
 
 const deleteGoal = (dispatch: Dispatch<Action>) => {
-  return (id: string) => {
-    dispatch({ type: "delete_goal", payload: id });
+  return async (id: string) => {
+    try {
+      await tablesDB.deleteRow({
+        databaseId: SAVORA_DATABASE_ID,
+        tableId: GOALS_TABLE_ID,
+        rowId: id,
+      });
+
+      // Keeping the dispatch code here to refresh the screen
+      // We don't strictly need to add a listener as we did
+      // when adding a new goal
+      dispatch({ type: "delete_goal", payload: id });
+    } catch (error: unknown) {
+      console.error("Failed to delete a goal:\n", error);
+      return;
+    }
   };
 };
 
 const getGoals = (dispatch: Dispatch<Action>) => {
   return async () => {
-    const response = await tablesDB.listRows({
-      databaseId: SAVORA_DATABASE_ID,
-      tableId: GOALS_TABLE_ID,
-      queries: [Query.orderDesc("$createdAt"), Query.limit(10)],
-    });
+    try {
+      const response = await tablesDB.listRows({
+        databaseId: SAVORA_DATABASE_ID,
+        tableId: GOALS_TABLE_ID,
+        queries: [Query.orderDesc("$createdAt"), Query.limit(10)],
+      });
 
-    const goals = Goals.parse(response.rows);
-    console.log(goals);
-
-    dispatch({ type: "get_goals", payload: goals });
+      const goals = Goals.parse(response.rows);
+      dispatch({ type: "get_goals", payload: goals });
+    } catch (error: unknown) {
+      console.error("Failed to fetch goals:\n", error);
+      return;
+    }
   };
 };
 
 export const { Context, Provider } = createDataContext(
   goalReducer,
   { addGoal, editGoal, deleteGoal, getGoals },
-  [
-    // {
-    //   id: "1",
-    //   title: "Buy a new laptop",
-    //   category: "Electronics",
-    //   // imageSource: "src", // require("../assets/images/beach.jpg"), //require("@/assets/images/beach.jpg"), //"../../assets/beach.jpg"),
-    // },
-    // {
-    //   id: "2",
-    //   title: "Save for vacation",
-    //   category: "Travel",
-    //   // imageSource: "src",
-    //   // imageSource: require("@/assets/images/forest.jpg"), // "../../assets/forest.jpg"),
-    // },
-  ] as GoalType[]
+  [] as GoalType[]
 );
